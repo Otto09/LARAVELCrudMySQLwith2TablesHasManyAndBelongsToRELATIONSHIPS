@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Owner extends Model
 {
     protected $fillable = [
-      'owner', 'animal'
+      'owner', 'animal', 'user_id'
     ];
 
     public function specifics()

@@ -28,3 +28,7 @@ Route::post('/owners', 'OwnersController@store');
 Route::get('/owners/{owner}/edit', 'OwnersController@edit');
 Route::patch('/owners/{owner}', 'OwnersController@update');
 Route::delete('/owners/{owner}', 'OwnersController@destroy');*/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

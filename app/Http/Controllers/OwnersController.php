@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Owner;
 
+
 class OwnersController extends Controller
 {
+    function __construct()
+    {
+      $this->middleware('auth');
+    }
+
     public function index()
     {
-      $owners = Owner::all();
+      $owners = Owner::where('user_id', auth()->id())->get();
 
       return view('owners.index', compact('owners'));
     }
@@ -21,6 +27,8 @@ class OwnersController extends Controller
 
     public function show(Owner $owner)
     {
+      $this->authorize('update', $owner);
+
       return view('owners.show', compact('owner'));
     }
 
@@ -31,6 +39,8 @@ class OwnersController extends Controller
 
     public function update(Request $request, $id)
     {
+      $this->authorize('update', $owner);
+
       request()->validate([
       'owner' => ['required', 'min:3'],
       'animal' => ['required', 'min:3']
@@ -43,6 +53,8 @@ class OwnersController extends Controller
 
     public function destroy(Owner $owner)
     {
+      $this->authorize('update', $owner);
+      
       $owner->delete();
 
       return redirect('/owners');
@@ -54,6 +66,8 @@ class OwnersController extends Controller
       'owner' => ['required', 'min:3'],
       'animal' => ['required', 'min:3']
       ]);
+
+      $attributes['user_id'] = auth()->id();
 
       Owner::create($attributes);
 
