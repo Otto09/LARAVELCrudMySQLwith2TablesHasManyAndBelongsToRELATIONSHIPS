@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Owner;
+use App\Mail\OwnerCreated;
 
 
 class OwnersController extends Controller
@@ -15,9 +16,14 @@ class OwnersController extends Controller
 
     public function index()
     {
-      $owners = Owner::where('user_id', auth()->id())->get();
+      $owners = auth()->user()->owners;
 
-      return view('owners.index', compact('owners'));
+      //Get all the owners for the authenticated user
+      //$owners = Owner::where('user_id', auth()->id())->get();
+
+      return view('owners.index', [
+        'owners' => auth()->user()->owners
+      ]);
     }
 
     public function create()
@@ -39,8 +45,6 @@ class OwnersController extends Controller
 
     public function update(Request $request, $id)
     {
-      $this->authorize('update', $owner);
-
       request()->validate([
       'owner' => ['required', 'min:3'],
       'animal' => ['required', 'min:3']
@@ -69,7 +73,11 @@ class OwnersController extends Controller
 
       $attributes['user_id'] = auth()->id();
 
-      Owner::create($attributes);
+      $owner = Owner::create($attributes);
+
+      \Mail::to($owner->user->email)->send(
+        new OwnerCreated($owner)
+      );
 
       return redirect('/owners');
     }

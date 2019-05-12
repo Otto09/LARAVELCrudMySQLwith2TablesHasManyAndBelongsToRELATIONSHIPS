@@ -10,6 +10,11 @@ class Owner extends Model
       'owner', 'animal', 'user_id'
     ];
 
+    public function user()
+    {
+      return $this->belongsTo(User::class);
+    }    
+
     public function specifics()
     {
       return $this->hasMany(Specific::class);

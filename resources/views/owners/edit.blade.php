@@ -18,7 +18,13 @@
                 <label for="owner" class="col-md-4 col-form-label text-md-right">{{ __('Owner') }}</label>
 
                 <div class="col-md-6">
-                  <input type="text" name="owner" class="form-control" value="{{ $owner->owner }}">
+                  <input type="text" name="owner" class="form-control{{ $errors->has('owner') ? ' is-invalid' : '' }}" value="{{ $owner->owner }}" required>
+
+                  @if ($errors->has('owner'))
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->first('owner') }}</strong>
+                      </span>
+                  @endif
                 </div>
               </div>
 
@@ -26,7 +32,13 @@
                 <label for="animal" class="col-md-4 col-form-label text-md-right">{{ __('Animal') }}</label>
 
                 <div class="col-md-6">
-                  <input type="text" name="animal" class="form-control" value="{{ $owner->animal }}">
+                  <input type="text" name="animal" class="form-control{{ $errors->has('animal') ? ' is-invalid' : '' }}" value="{{ $owner->animal }}" required>
+
+                  @if ($errors->has('animal'))
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->first('animal') }}</strong>
+                      </span>
+                  @endif
                 </div>
               </div>
 
