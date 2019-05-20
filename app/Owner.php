@@ -3,11 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\OwnerCreated;
 
 class Owner extends Model
 {
     protected $fillable = [
       'owner', 'animal', 'user_id'
+    ];
+
+    protected $dispatchesEvents = [
+      'created' => OwnerCreated::class
     ];
 
     public function user()

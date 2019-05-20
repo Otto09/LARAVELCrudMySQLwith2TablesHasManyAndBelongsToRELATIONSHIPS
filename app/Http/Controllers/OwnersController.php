@@ -75,9 +75,9 @@ class OwnersController extends Controller
 
       $owner = Owner::create($attributes);
 
-      \Mail::to($owner->user->email)->send(
-        new OwnerCreated($owner)
-      );
+      //\Mail::to($owner->user->email)->send(
+        //new OwnerCreated($owner)
+      //);
 
       return redirect('/owners');
     }
