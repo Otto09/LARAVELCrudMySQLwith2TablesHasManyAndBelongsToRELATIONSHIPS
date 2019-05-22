@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Owner;
 use App\Mail\OwnerCreated;
+use App\Notifications\OwnerCreatedNotification;
 
 
 class OwnersController extends Controller
@@ -78,6 +79,14 @@ class OwnersController extends Controller
       //\Mail::to($owner->user->email)->send(
         //new OwnerCreated($owner)
       //);
+
+      $user = \App\User::find(auth()->id());
+
+      $user->notify(new OwnerCreatedNotification($owner));
+
+      $user->notifications->markAsRead();
+
+      //return 'Done';
 
       return redirect('/owners');
     }

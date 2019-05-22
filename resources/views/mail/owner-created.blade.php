@@ -1,7 +1,7 @@
 @component('mail::message')
-# New Owner: {{$owner->owner}}
+# New Owner: {{ $owner->owner}}
 
-{{$owner->animal}}
+{{ $owner->animal}}
 
 @component('mail::button', ['url' => url('/owners/' . $owner->id)])
 View Owner
