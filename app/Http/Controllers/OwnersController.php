@@ -80,6 +80,8 @@ class OwnersController extends Controller
         //new OwnerCreated($owner)
       //);
 
+      flash('Your Owner has been created!');
+
       $user = \App\User::find(auth()->id());
 
       $user->notify(new OwnerCreatedNotification($owner));
